@@ -1,0 +1,25 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 448
+  DATASET: fetal
+  BATCH_SIZE: 8
+  PART: 'abdomen'
+MODEL:
+  TYPE: uninet
+  NAME: uninet_reg_v2_abdomen
+  NUM_CLASSES: 1
+  TASK_TYPE: reg
+  PROJECT_NAME: uninet_reg_v2_abdomen
+  RUN_ID: uninet_reg_v2_abdomen
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3 # 4096 batch-size
+  WARMUP_LR: 1.25e-7
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

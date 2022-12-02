@@ -1,0 +1,27 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 224
+  DATASET: covid
+  BATCH_SIZE: 32
+  TRAIN_PATH: '/home/kpusteln/covid_dataset/train_non_covid_normal.csv'
+  VAL_PATH: '/home/kpusteln/covid_dataset/val_non_covid_normal.csv'
+MODEL:
+  TYPE: resnet_101
+  NAME: resnet_101_non_covid_normal
+  FREEZE: False
+  NUM_CLASSES: 2
+  TASK_TYPE: cls
+  PROJECT_NAME: covid_resnet_101_non_covid_normal
+  RUN_ID: covid_resnet_101_non_covid_normal_v1
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 1
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3
+  WARMUP_LR: 1.25e-3
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

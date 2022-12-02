@@ -1,0 +1,27 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 224
+  DATASET: covid
+  BATCH_SIZE: 32
+  TRAIN_PATH: '/home/kpusteln/covid_dataset/train_covid_non_covid.csv'
+  VAL_PATH: '/home/kpusteln/covid_dataset/val_covid_non_covid.csv'
+MODEL:
+  TYPE: resnet_101
+  NAME: resnet_101_covid_vs_non_covid_aug
+  FREEZE: False
+  NUM_CLASSES: 2
+  TASK_TYPE: cls
+  PROJECT_NAME: covid_resnet_101_covid_vs_non_covid_aug
+  RUN_ID: covid_resnet_101_covid_vs_non_covid_v1_aug
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 1
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3
+  WARMUP_LR: 1.25e-3
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

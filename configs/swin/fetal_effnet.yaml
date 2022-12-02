@@ -1,0 +1,24 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 512
+  DATASET: fetal
+  BATCH_SIZE: 8
+MODEL:
+  TYPE: effnet
+  NAME: effnet_cls
+  NUM_CLASSES: 7
+  TASK_TYPE: cls
+  PROJECT_NAME: efffcientnet_cls
+  RUN_ID: efffcientnet_cls
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3 # 4096 batch-size
+  WARMUP_LR: 1.25e-7
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

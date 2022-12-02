@@ -1,0 +1,33 @@
+DATA:
+  IMG_SIZE: 512
+  IMG_SIZE_SWIN: 64
+  DATASET: fetal
+  BATCH_SIZE: 64
+MODEL:
+  TYPE: swin
+  NAME: resnet_swin
+  DROP_PATH_RATE: 0.1
+  DROP_RATE: 0.1
+  NUM_CLASSES: 7
+  TASK_TYPE: cls
+  PROJECT_NAME: resnet_swin_classification
+  RUN_ID: resnet_swin_classification2
+  AFFIX: _cls.csv
+  LABEL_SMOOTHING: 0.0
+  SWIN:
+    EMBED_DIM: 96
+    DEPTHS: [ 2, 2, 6, 2 ]
+    NUM_HEADS: [ 3, 6, 12, 24 ]
+    WINDOW_SIZE: 4
+    PATCH_SIZE: 2
+    IN_CHANS: 512
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3 # 4096 batch-size
+  WARMUP_LR: 1.25e-7
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

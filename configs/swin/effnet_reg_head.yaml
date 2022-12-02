@@ -1,0 +1,25 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 512
+  DATASET: fetal
+  BATCH_SIZE: 8
+  PART: 'head'
+MODEL:
+  TYPE: effnet
+  NAME: effnet_reg_v2_head
+  NUM_CLASSES: 1
+  TASK_TYPE: reg
+  PROJECT_NAME: efffcientnet_reg_v2_head
+  RUN_ID: efffcientnet_reg_v2_head
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3 # 4096 batch-size
+  WARMUP_LR: 1.25e-7
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

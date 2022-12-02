@@ -1,0 +1,28 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 256
+  DATASET: melanoma
+  BATCH_SIZE: 32
+  TRAIN_PATH: '/home/kpusteln/melanoma/train_set.csv'
+  VAL_PATH: '/home/kpusteln/melanoma/val_set.csv'
+MODEL:
+  TYPE: resnet_50_attention
+  NAME: resnet_50_melanoma_att
+  FREEZE: False
+  NUM_CLASSES: 2
+  IN_CHANNELS: 3
+  TASK_TYPE: cls
+  PROJECT_NAME: melanoma_resnet50_att
+  RUN_ID: melanoma_resnet50_att_v1
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 1
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3
+  WARMUP_LR: 1.25e-3
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0

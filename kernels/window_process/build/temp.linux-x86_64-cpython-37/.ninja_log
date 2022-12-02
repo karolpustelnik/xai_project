@@ -1,0 +1,10 @@
+# ninja log v5
+2	18208	1658247077063231694	/data/kpusteln/Swin-Transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process.o	9978a70a92848673
+113	28498	1658251395627927591	/data/kpusteln/Swin-Transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process.o	dd66c8b8848b9e56
+113	37523	1658251404723733936	/data/kpusteln/Swin-Transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process_kernel.o	f590abc5135d1670
+4	19262	1659895307033007620	/data/kpusteln/Fetal-RL/swin-transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process.o	d9940b3715fe9b3c
+4	28378	1659895316189011325	/data/kpusteln/Fetal-RL/swin-transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process_kernel.o	7ff9659348006dfc
+142	18960	1659899297350747040	/data/kpusteln/Fetal-RL/swin-transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process.o	3abd51be82ad4edc
+142	28004	1659899306450749257	/data/kpusteln/Fetal-RL/swin-transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process_kernel.o	28789495dd30538b
+16	19122	1659905295773385658	/data/kpusteln/Fetal-RL/swin-transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process.o	d9940b3715fe9b3c
+16	28055	1659905304749387192	/data/kpusteln/Fetal-RL/swin-transformer/kernels/window_process/build/temp.linux-x86_64-cpython-37/swin_window_process_kernel.o	7ff9659348006dfc

@@ -1,0 +1,28 @@
+PARALLEL_TYPE: 'ddp'
+DATA:
+  IMG_SIZE: 256
+  DATASET: covid
+  BATCH_SIZE: 32
+  TRAIN_PATH: '/home/kpusteln/covid_dataset/train.csv'
+  VAL_PATH: '/home/kpusteln/covid_dataset/val.csv'
+MODEL:
+  TYPE: resnet_101
+  NAME: resnet_101_covid_all
+  FREEZE: False
+  NUM_CLASSES: 3
+  IN_CHANNELS: 1
+  TASK_TYPE: cls
+  PROJECT_NAME: covid_resnet_101_all
+  RUN_ID: covid_resnet_101_all_v1
+  AFFIX: .csv
+  LABEL_SMOOTHING: 0.0
+TRAIN:
+  EPOCHS: 90
+  WARMUP_EPOCHS: 1
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 1.25e-3
+  WARMUP_LR: 1.25e-3
+  MIN_LR: 1.25e-6
+AUG:
+  MIXUP: 0.0
+  CUTMIX: 0.0
