@@ -37,7 +37,13 @@ class Melanoma_loader(data.Dataset):
             
         if self.target_transform is not None:
             target = self.target_transform(target)
+            
         return images, Class
-
+	
+    def lookup_path(self, index):
+        idb = self.database.iloc[index]
+        return idb[0]
+    
+    
     def __len__(self):
         return len(self.database)
