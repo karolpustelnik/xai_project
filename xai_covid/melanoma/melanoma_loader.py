@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
+
 class Melanoma_loader(data.Dataset):
     def __init__(self, root, ann_path, transform=None, target_transform=None):
 
@@ -16,7 +17,7 @@ class Melanoma_loader(data.Dataset):
         try:
             im = Image.open(path)
         except:
-            print("ERROR IMG LOADED: ", path)
+            print(f"Error: image ({path}) not found")
             random_img = np.random.rand(224, 224, 3) * 255
             im = Image.fromarray(np.uint8(random_img))
         return im
@@ -31,19 +32,18 @@ class Melanoma_loader(data.Dataset):
         idb = self.database.iloc[index]
         filename = idb[0]
         Class = int(idb[5])
-        images = self._load_image(self.data_path + '/' + str(filename) + '.jpg')
+        images = self._load_image(self.data_path + "/" + str(filename) + ".jpg")
         if self.transform is not None:
             images = self.transform(images)
-            
+
         if self.target_transform is not None:
             target = self.target_transform(target)
-            
+
         return images, Class
-	
+
     def lookup_path(self, index):
         idb = self.database.iloc[index]
         return idb[0]
-    
-    
+
     def __len__(self):
         return len(self.database)
