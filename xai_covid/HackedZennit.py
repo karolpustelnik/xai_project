@@ -76,5 +76,8 @@ def get_canonizer(conditions):
     for condition in conditions:
         for layer_name in condition.keys():
             if layer_name.startswith("backbone.layer"):
-                masked_skips.add(layer_name[:len("backbone.layer") + 3])
+                masked_skips.add(layer_name[:len("bacbkone.layer") + 3])
+            if layer_name.startswith("model.layer"):
+                masked_skips.add(layer_name[:len("model.layer") + 3])
+    print(masked_skips)
     return [HackCanonizer(list(masked_skips))]
