@@ -1,6 +1,6 @@
 import torch
 from torchvision.models import resnet50, resnet101
-
+#from models.resnet_org import resnet50, resnet101
 
 
 
@@ -38,7 +38,7 @@ class ResNet50(torch.nn.Module):
         
         self.out_features = out_features
         self.in_channels = in_channels
-        self.backbone = resnet50(weights='ResNet50_Weights.IMAGENET1K_V2')
+        self.backbone = resnet50()
         self.backbone.conv1 = torch.nn.Conv2d(in_channels=self.in_channels, out_channels=64,
                                               kernel_size = (7, 7), stride = (2, 2), padding = (3, 3), bias = False)
         self.backbone.fc = torch.nn.Linear(in_features=2048, out_features=self.out_features, bias=True)
@@ -56,3 +56,4 @@ class ResNet50(torch.nn.Module):
     def forward(self, x):
         x = self.backbone(x)
         return x
+    

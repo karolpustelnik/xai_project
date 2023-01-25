@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
 from torchvision import datasets, transforms
+from torchvision.models.resnet import Bottleneck, BasicBlock
 from PIL import Image
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
@@ -23,93 +24,93 @@ def conv1x1(in_planes, out_planes, stride=1):
     return nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=stride, bias=False)
 
 
-class BasicBlock(nn.Module):
-    expansion = 1
+# class BasicBlock(nn.Module):
+#     expansion = 1
 
-    def __init__(self, inplanes, planes, stride=1, downsample=None, groups=1,
-                 base_width=64, dilation=1, norm_layer=None):
-        super(BasicBlock, self).__init__()
-        if norm_layer is None:
-            norm_layer = nn.BatchNorm2d
-        if groups != 1 or base_width != 64:
-            raise ValueError('BasicBlock only supports groups=1 and base_width=64')
-        if dilation > 1:
-            raise NotImplementedError("Dilation > 1 not supported in BasicBlock")
-        # Both self.conv1 and self.downsample layers downsample the input when stride != 1
-        self.conv1 = conv3x3(inplanes, planes, stride)
-        self.bn1 = norm_layer(planes)
-        self.relu = nn.ReLU(inplace=True)
-        self.conv2 = conv3x3(planes, planes)
-        self.bn2 = norm_layer(planes)
-        self.downsample = downsample
-        self.stride = stride
+#     def __init__(self, inplanes, planes, stride=1, downsample=None, groups=1,
+#                  base_width=64, dilation=1, norm_layer=None):
+#         super(BasicBlock, self).__init__()
+#         if norm_layer is None:
+#             norm_layer = nn.BatchNorm2d
+#         if groups != 1 or base_width != 64:
+#             raise ValueError('BasicBlock only supports groups=1 and base_width=64')
+#         if dilation > 1:
+#             raise NotImplementedError("Dilation > 1 not supported in BasicBlock")
+#         # Both self.conv1 and self.downsample layers downsample the input when stride != 1
+#         self.conv1 = conv3x3(inplanes, planes, stride)
+#         self.bn1 = norm_layer(planes)
+#         self.relu = nn.ReLU(inplace=True)
+#         self.conv2 = conv3x3(planes, planes)
+#         self.bn2 = norm_layer(planes)
+#         self.downsample = downsample
+#         self.stride = stride
 
-    def forward(self, x):
-        identity = x
+#     def forward(self, x):
+#         identity = x
 
-        out = self.conv1(x)
-        out = self.bn1(out)
-        out = self.relu(out)
+#         out = self.conv1(x)
+#         out = self.bn1(out)
+#         out = self.relu(out)
 
-        out = self.conv2(out)
-        out = self.bn2(out)
+#         out = self.conv2(out)
+#         out = self.bn2(out)
 
-        if self.downsample is not None:
-            identity = self.downsample(x)
+#         if self.downsample is not None:
+#             identity = self.downsample(x)
 
-        out += identity
-        out = self.relu(out)
+#         out += identity
+#         out = self.relu(out)
 
-        return out
+#         return out
 
 
-class Bottleneck(nn.Module):
-    # Bottleneck in torchvision places the stride for downsampling at 3x3 convolution(self.conv2)
-    # while original implementation places the stride at the first 1x1 convolution(self.conv1)
-    # according to "Deep residual learning for image recognition"https://arxiv.org/abs/1512.03385.
-    # This variant is also known as ResNet V1.5 and improves accuracy according to
-    # https://ngc.nvidia.com/catalog/model-scripts/nvidia:resnet_50_v1_5_for_pytorch.
+# class Bottleneck(nn.Module):
+#     # Bottleneck in torchvision places the stride for downsampling at 3x3 convolution(self.conv2)
+#     # while original implementation places the stride at the first 1x1 convolution(self.conv1)
+#     # according to "Deep residual learning for image recognition"https://arxiv.org/abs/1512.03385.
+#     # This variant is also known as ResNet V1.5 and improves accuracy according to
+#     # https://ngc.nvidia.com/catalog/model-scripts/nvidia:resnet_50_v1_5_for_pytorch.
 
-    expansion = 4
+#     expansion = 4
 
-    def __init__(self, inplanes, planes, stride=1, downsample=None, groups=1,
-                 base_width=64, dilation=1, norm_layer=None):
-        super(Bottleneck, self).__init__()
-        if norm_layer is None:
-            norm_layer = nn.BatchNorm2d
-        width = int(planes * (base_width / 64.)) * groups
-        # Both self.conv2 and self.downsample layers downsample the input when stride != 1
-        self.conv1 = conv1x1(inplanes, width)
-        self.bn1 = norm_layer(width)
-        self.conv2 = conv3x3(width, width, stride, groups, dilation)
-        self.bn2 = norm_layer(width)
-        self.conv3 = conv1x1(width, planes * self.expansion)
-        self.bn3 = norm_layer(planes * self.expansion)
-        self.relu = nn.ReLU(inplace=True)
-        self.downsample = downsample
-        self.stride = stride
+#     def __init__(self, inplanes, planes, stride=1, downsample=None, groups=1,
+#                  base_width=64, dilation=1, norm_layer=None):
+#         super(Bottleneck, self).__init__()
+#         if norm_layer is None:
+#             norm_layer = nn.BatchNorm2d
+#         width = int(planes * (base_width / 64.)) * groups
+#         # Both self.conv2 and self.downsample layers downsample the input when stride != 1
+#         self.conv1 = conv1x1(inplanes, width)
+#         self.bn1 = norm_layer(width)
+#         self.conv2 = conv3x3(width, width, stride, groups, dilation)
+#         self.bn2 = norm_layer(width)
+#         self.conv3 = conv1x1(width, planes * self.expansion)
+#         self.bn3 = norm_layer(planes * self.expansion)
+#         self.relu = nn.ReLU(inplace=True)
+#         self.downsample = downsample
+#         self.stride = stride
 
-    def forward(self, x):
-        identity = x
+#     def forward(self, x):
+#         identity = x
 
-        out = self.conv1(x)
-        out = self.bn1(out)
-        out = self.relu(out)
+#         out = self.conv1(x)
+#         out = self.bn1(out)
+#         out = self.relu(out)
 
-        out = self.conv2(out)
-        out = self.bn2(out)
-        out = self.relu(out)
+#         out = self.conv2(out)
+#         out = self.bn2(out)
+#         out = self.relu(out)
 
-        out = self.conv3(out)
-        out = self.bn3(out)
+#         out = self.conv3(out)
+#         out = self.bn3(out)
 
-        if self.downsample is not None:
-            identity = self.downsample(x)
+#         if self.downsample is not None:
+#             identity = self.downsample(x)
 
-        out += identity
-        out = self.relu(out)
+#         out += identity
+#         out = self.relu(out)
 
-        return out
+#         return out
 
 
 class ResNetAtt(nn.Module):
@@ -211,7 +212,7 @@ class ResNetAtt(nn.Module):
     def _forward_impl(self, x):
         x = self.extract_features(x)
         #print(f'Feature map resnet: {x.shape}')
-        h = x.register_hook(self.activations_hook)
+        #h = x.register_hook(self.activations_hook)
         batch_size = x.shape[0]
         num_features = x.shape[1]
         feature_size = x.shape[2]
@@ -328,25 +329,25 @@ class GatedAttention(nn.Module):
         self.attention_weights = nn.Linear(self.hidden_size, 1)
 
     def forward(self, x):
-        #print(x.shape)
+        print(x.shape)
         #x = torch.flatten(x, 1)
-        #print(f'shape of x after flattening in gated attention: {x.shape}')
+        print(f'shape of x after flattening in gated attention: {x.shape}')
         A_V = self.attention_V(x)  # NxD
-        #print(f'shape of A_V in gated attention: {A_V.shape}')
+        print(f'shape of A_V in gated attention: {A_V.shape}')
         A_U = self.attention_U(x)  # NxD
-        #print(f'shape of A_U in gated attention: {A_U.shape}')
+        print(f'shape of A_U in gated attention: {A_U.shape}')
         A = self.attention_weights(A_V * A_U) # element wise multiplication # NxK
-        #print(f'shape of A after A_V*A_U in gated attention: {A.shape}')
+        print(f'shape of A after A_V*A_U in gated attention: {A.shape}')
         #A = torch.transpose(A, 1, 0)  # KxN
         
         A = F.softmax(A, dim=1)  # softmax over N
-        #print(f'shape of x in gated attention: {x.shape}')
+        print(f'shape of x in gated attention: {x.shape}')
         
-        #print(f'shape of A in gated attention: {A.shape}')
+        print(f'shape of A in gated attention: {A.shape}')
         A = torch.permute(A, (0, 2, 1))  # NxK
         #fdsfdsfdsprint(f'shape of A after permute in gated attention: {A.shape}')
         z = torch.bmm(A, x)  # KxL
-        #print(f'shape of z in gated attention: {z.shape}')
+        print(f'shape of z in gated attention: {z.shape}')
         return z, A
 
 
