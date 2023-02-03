@@ -2,7 +2,7 @@ from PIL import Image
 
 WIDTH = 256
 HEIGHT = 256
-ROOT = "/Users/karol/melanoma/train/train/"
+ROOT = "data/train/train/"
 
 def stacked_img(img_path, extra_img):
     img = Image.open(ROOT + img_path + ".jpg")
